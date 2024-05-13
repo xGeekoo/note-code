@@ -1,0 +1,101 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-image: url('/src/assets/Hero-Background-notecode.svg'),
+    linear-gradient(to bottom right, #b787f5, #743ee4);
+  background-position: top center;
+  background-repeat: no-repeat;
+
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.5;
+
+  min-height: 100vh;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.logo {
+  margin: 0 auto;
+  margin-bottom: 2.5rem;
+}
+
+.title {
+  margin-bottom: 3rem;
+}
+
+.main-container {
+  padding-top: 3rem;
+}
+
+.heading {
+  font-size: 4rem;
+  font-weight: 600;
+
+  &--primary {
+    font-size: 4rem;
+  }
+
+  &--secondary {
+    font-size: 3.2rem;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.main {
+  margin: 0 auto;
+  padding: 2rem 0;
+  width: 90rem;
+  background-color: #fffffe;
+  color: gray;
+  border-radius: 1rem;
+
+  &--dark {
+    background-color: #1e1e1e;
+  }
+}
+
+.editor {
+  margin-bottom: 20px;
+}
+
+.dropdown-menu {
+  display: inline-block;
+  position: relative;
+  min-width: 15rem;
+
+  &__select {
+    background-color: #ced6e1;
+    color: #364153;
+    border-radius: 99.9rem;
+    appearance: none;
+    padding: 1rem 2rem;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  &__arrow {
+    position: absolute;
+    top: 50%;
+    right: 2.5rem;
+    translate: 50% -45%;
+    width: 3rem;
+    height: auto;
+    pointer-events: none;
+  }
+}

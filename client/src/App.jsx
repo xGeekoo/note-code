@@ -1,0 +1,108 @@
+import Editor from '@monaco-editor/react';
+import { useRef, useState } from 'react';
+
+const DEFAULT_VALUE = `
+<html>
+  <head>
+    <title>HTML Sample</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <style type="text/css">
+      h1 {
+        color: #CCA3A3;
+      }
+    </style>
+    <script type="text/javascript">
+      alert("I am a sample... visit devChallengs.io for more projects");
+    </script>
+  </head>
+  <body>
+    <h1>Heading No.1</h1>
+    <input disabled type="button" value="Click me" />
+  </body>
+</html>
+`.trim();
+
+function App() {
+  return (
+    <div className="main-container">
+      <header>
+        <h2>
+          <img
+            className="logo"
+            src="/src/assets/NoteCodeLogo.svg"
+            alt="NoteCode logo"
+          />
+        </h2>
+        <h1 className="title heading--secondary text-center">
+          Create & Share
+          <br />
+          <span className="heading--primary">Your Code easily</span>
+        </h1>
+      </header>
+      <CodeEditor />
+    </div>
+  );
+}
+
+function CodeEditor() {
+  const [theme, setTheme] = useState('vs-dark');
+  const [language, setLanguage] = useState('html');
+
+  const editorRef = useRef(null);
+
+  function handleEditorDidMount(editor, monaco) {
+    editorRef.current = editor;
+  }
+
+  function showValue() {
+    console.log(editorRef.current.getValue());
+  }
+
+  return (
+    <main className={`main ${theme === 'vs-dark' ? 'main--dark' : ''}`}>
+      <div className="editor">
+        <Editor
+          height="90rem"
+          theme={theme}
+          language={language}
+          defaultValue={DEFAULT_VALUE}
+          onMount={handleEditorDidMount}
+          className="editor"
+        />
+      </div>
+      <div className="dropdown-menu">
+        <select
+          className="dropdown-menu__select"
+          value={language}
+          onChange={e => setLanguage(e.target.value)}
+        >
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="javascript">JavaScript</option>
+        </select>
+        <img
+          className="dropdown-menu__arrow"
+          src="/src/assets/down-arrow.svg"
+          alt="Down Arrow"
+        />
+      </div>
+      <div className="dropdown-menu">
+        <select
+          className="dropdown-menu__select"
+          value={theme}
+          onChange={e => setTheme(e.target.value)}
+        >
+          <option value="vs-dark">VS Dark</option>
+          <option value="light">Light</option>
+        </select>
+        <img
+          className="dropdown-menu__arrow"
+          src="/src/assets/down-arrow.svg"
+          alt="Down Arrow"
+        />
+      </div>
+    </main>
+  );
+}
+
+export default App;
