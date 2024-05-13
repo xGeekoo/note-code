@@ -1,85 +1,26 @@
-import Editor from '@monaco-editor/react';
-import { useRef, useState } from 'react';
-
-const DEFAULT_VALUE = `
-<html>
-  <head>
-    <title>HTML Sample</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <style type="text/css">
-      h1 {
-        color: #CCA3A3;
-      }
-    </style>
-    <script type="text/javascript">
-      alert("I am a sample... visit devChallengs.io for more projects");
-    </script>
-  </head>
-  <body>
-    <h1>Heading No.1</h1>
-    <input disabled type="button" value="Click me" />
-  </body>
-</html>
-`.trim();
+import CodeEditor from './components/CodeEditor';
 
 function App() {
   return (
-    <>
-      <header>
-        <h2>
-          <img src="/src/assets/NoteCodeLogo.svg" alt="NoteCode logo" />
+    <div className="mx-auto max-w-[56.25rem] px-4 pt-9">
+      <header className="mb-9">
+        <h2 className="mb-9">
+          <img
+            className="mx-auto h-6"
+            src="/src/assets/NoteCodeLogo.svg"
+            alt="NoteCode logo"
+          />
         </h2>
-        <h1>
+        <h1 className="text-center text-[2rem]">
           Create & Share
           <br />
-          <span>Your Code easily</span>
+          <span className="text-[2.5rem]">Your Code easily</span>
         </h1>
       </header>
-      <CodeEditor />
-    </>
-  );
-}
-
-function CodeEditor() {
-  const [theme, setTheme] = useState('vs-dark');
-  const [language, setLanguage] = useState('html');
-
-  const editorRef = useRef(null);
-
-  function handleEditorDidMount(editor, monaco) {
-    editorRef.current = editor;
-  }
-
-  function showValue() {
-    console.log(editorRef.current.getValue());
-  }
-
-  return (
-    <main>
-      <div>
-        <Editor
-          theme={theme}
-          language={language}
-          defaultValue={DEFAULT_VALUE}
-          onMount={handleEditorDidMount}
-        />
-      </div>
-      <div>
-        <select value={language} onChange={e => setLanguage(e.target.value)}>
-          <option value="html">HTML</option>
-          <option value="css">CSS</option>
-          <option value="javascript">JavaScript</option>
-        </select>
-        <img src="/src/assets/down-arrow.svg" alt="Down Arrow" />
-      </div>
-      <div>
-        <select value={theme} onChange={e => setTheme(e.target.value)}>
-          <option value="vs-dark">VS Dark</option>
-          <option value="light">Light</option>
-        </select>
-        <img src="/src/assets/down-arrow.svg" alt="Down Arrow" />
-      </div>
-    </main>
+      <main>
+        <CodeEditor />
+      </main>
+    </div>
   );
 }
 
