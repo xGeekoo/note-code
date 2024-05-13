@@ -24,23 +24,19 @@ const DEFAULT_VALUE = `
 
 function App() {
   return (
-    <div className="main-container">
+    <>
       <header>
         <h2>
-          <img
-            className="logo"
-            src="/src/assets/NoteCodeLogo.svg"
-            alt="NoteCode logo"
-          />
+          <img src="/src/assets/NoteCodeLogo.svg" alt="NoteCode logo" />
         </h2>
-        <h1 className="title heading--secondary text-center">
+        <h1>
           Create & Share
           <br />
-          <span className="heading--primary">Your Code easily</span>
+          <span>Your Code easily</span>
         </h1>
       </header>
       <CodeEditor />
-    </div>
+    </>
   );
 }
 
@@ -59,47 +55,29 @@ function CodeEditor() {
   }
 
   return (
-    <main className={`main ${theme === 'vs-dark' ? 'main--dark' : ''}`}>
-      <div className="editor">
+    <main>
+      <div>
         <Editor
-          height="90rem"
           theme={theme}
           language={language}
           defaultValue={DEFAULT_VALUE}
           onMount={handleEditorDidMount}
-          className="editor"
         />
       </div>
-      <div className="dropdown-menu">
-        <select
-          className="dropdown-menu__select"
-          value={language}
-          onChange={e => setLanguage(e.target.value)}
-        >
+      <div>
+        <select value={language} onChange={e => setLanguage(e.target.value)}>
           <option value="html">HTML</option>
           <option value="css">CSS</option>
           <option value="javascript">JavaScript</option>
         </select>
-        <img
-          className="dropdown-menu__arrow"
-          src="/src/assets/down-arrow.svg"
-          alt="Down Arrow"
-        />
+        <img src="/src/assets/down-arrow.svg" alt="Down Arrow" />
       </div>
-      <div className="dropdown-menu">
-        <select
-          className="dropdown-menu__select"
-          value={theme}
-          onChange={e => setTheme(e.target.value)}
-        >
+      <div>
+        <select value={theme} onChange={e => setTheme(e.target.value)}>
           <option value="vs-dark">VS Dark</option>
           <option value="light">Light</option>
         </select>
-        <img
-          className="dropdown-menu__arrow"
-          src="/src/assets/down-arrow.svg"
-          alt="Down Arrow"
-        />
+        <img src="/src/assets/down-arrow.svg" alt="Down Arrow" />
       </div>
     </main>
   );
