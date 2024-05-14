@@ -1,7 +1,9 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import DropdownMenu from './DropdownMenu';
 import ShareButton from './ShareButton';
+import { getNote } from '../services/apiNote';
+import { useParams } from 'react-router-dom';
 
 const DEFAULT_VALUE = `
 <html>
@@ -25,13 +27,18 @@ const DEFAULT_VALUE = `
 `.trim();
 
 function CodeEditor() {
-  const [theme, setTheme] = useState('light');
+  const { id } = useParams();
+  const isLoading = useRef(false);
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [theme, setTheme] = useState('vs-dark');
   const [language, setLanguage] = useState('html');
 
   const editorRef = useRef(null);
 
   function handleEditorDidMount(editor) {
     editorRef.current = editor;
+    console.log('editor mounted');
+    if (isLoading.current) setShowSpinner(true);
   }
 
   function showValue() {
@@ -41,16 +48,34 @@ function CodeEditor() {
   const backgroundColor =
     theme === 'vs-dark' ? 'bg-clr-editor-black' : 'bg-clr-editor-white';
 
+  useEffect(() => {
+    async function main() {
+      if (!id) return;
+      isLoading.current = true;
+      const { note } = await getNote(id);
+      isLoading.current = false;
+      setShowSpinner(false);
+      setLanguage(note.code);
+      editorRef.current.setValue(note.message);
+    }
+
+    main();
+  }, [id]);
+
   return (
-    <div className={`${backgroundColor} rounded-xl pt-5 shadow-xl`}>
-      <div className="text-5xl text-clr-gray-light">
+    <div
+      className={`${backgroundColor} rounded-xl pt-5 shadow-xl ${isLoading.current ? 'pointer-events-none' : ''}`}
+    >
+      <div className="relative text-5xl text-clr-gray-light">
         <Editor
           height="50rem"
           theme={theme}
           language={language}
-          defaultValue={DEFAULT_VALUE}
+          defaultValue={id ? '' : DEFAULT_VALUE}
           onMount={handleEditorDidMount}
+          loading={<div className="loader"></div>}
         />
+        {showSpinner && <div className="loader"></div>}
       </div>
       <div className="flex items-center gap-2 rounded-full px-4 py-7">
         <DropdownMenu

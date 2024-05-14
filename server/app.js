@@ -13,6 +13,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.json());
 
+// app.use((req, res, next) => {
+//   setTimeout(next, 5000);
+// });
+
 app.use('/api/v1/notes', noteRoutes);
 
 app.all('*', (req, res) => {
