@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon ."
+    "dev": "cross-env NODE_ENV=development nodemon .",
+    "prod": "node ."
   },
   "keywords": [],
   "author": "",
