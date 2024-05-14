@@ -14,6 +14,16 @@ const noteSchema = new mongoose.Schema({
       message: 'Please provide a valid programming language.'
     },
     required: [true, 'Please specified a programming language.']
+  },
+  theme: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    enum: {
+      values: ['light', 'vs-dark'],
+      message: 'Please provide a valid theme.'
+    },
+    required: [true, 'Please provide a theme.']
   }
 });
 
