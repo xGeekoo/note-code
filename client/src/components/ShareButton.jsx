@@ -3,6 +3,9 @@ import toast from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 import { createNote } from '../services/apiNote';
 
+import share from '../assets/share.svg';
+import link from '../assets/link.svg';
+
 function ShareButton({ isShared, setIsShared, showValue, language, theme }) {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -42,7 +45,7 @@ function ShareButton({ isShared, setIsShared, showValue, language, theme }) {
       {isShared && isLink && (
         <div className="flex items-center gap-3">
           <button onClick={copyURL}>
-            <img src="/src/assets/link.svg" alt="" />
+            <img src={link} alt="" />
           </button>
           <span className="text-clr-gray-medium">.../{id}</span>
         </div>
@@ -52,7 +55,7 @@ function ShareButton({ isShared, setIsShared, showValue, language, theme }) {
         className={`disabled:bg-clr-gray-medium flex items-center gap-3 rounded-full bg-clr-blue px-5 py-2.5 text-xl text-clr-white disabled:cursor-not-allowed`}
         disabled={isShared}
       >
-        <img src="/src/assets/share.svg" alt="Share" />
+        <img src={share} alt="Share" />
         Share
       </button>
     </div>

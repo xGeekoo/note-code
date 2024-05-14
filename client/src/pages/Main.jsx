@@ -1,4 +1,5 @@
 import CodeEditor from '../components/CodeEditor';
+import noteCodeLogo from '../assets/NoteCodeLogo.svg';
 
 function Main() {
   return (
@@ -6,11 +7,7 @@ function Main() {
       <header className="mb-9">
         <h2 className="mb-9">
           <a className="mx-auto block w-max" href="/">
-            <img
-              className="h-6"
-              src="/src/assets/NoteCodeLogo.svg"
-              alt="NoteCode logo"
-            />
+            <img className="h-6" src={noteCodeLogo} alt="NoteCode logo" />
           </a>
         </h2>
         <h1 className="text-center text-[2rem]">
