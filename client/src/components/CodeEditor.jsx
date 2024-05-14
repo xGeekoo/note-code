@@ -37,7 +37,6 @@ function CodeEditor() {
 
   function handleEditorDidMount(editor) {
     editorRef.current = editor;
-    console.log('editor mounted');
     if (isLoading.current) setShowSpinner(true);
   }
 
@@ -64,7 +63,7 @@ function CodeEditor() {
 
   return (
     <div
-      className={`${backgroundColor} rounded-xl pt-5 shadow-xl ${isLoading.current ? 'pointer-events-none' : ''}`}
+      className={`${backgroundColor} rounded-xl pt-5 shadow-xl ${showSpinner ? 'pointer-events-none' : ''}`}
     >
       <div className="relative text-5xl text-clr-gray-light">
         <Editor
