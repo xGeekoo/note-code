@@ -1,7 +1,9 @@
 const path = require('node:path');
 const express = require('express');
+const AppError = require('./utils/AppError');
 
-const postRoutes = require('./routes/postRoutes');
+const noteRoutes = require('./routes/noteRoutes');
+const errorController = require('./controllers/errorController');
 
 const app = express();
 
@@ -9,16 +11,17 @@ app.set('json spaces', 2);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/v1/notes', postRoutes);
+app.use(express.json());
+
+app.use('/api/v1/notes', noteRoutes);
 
 app.all('*', (req, res) => {
-  throw new Error(
-    `The requested resource (${req.path}) was not found on the server.`
+  throw new AppError(
+    `The requested resource (${req.path}) was not found on the server.`,
+    404
   );
 });
 
-app.use((err, req, res, next) => {
-  res.status(404).json({ status: 'fail', message: err.message });
-});
+app.use(errorController);
 
 module.exports = app;
