@@ -9,7 +9,8 @@ exports.getNote = catchAsync(async (req, res) => {
 });
 
 exports.createNote = catchAsync(async (req, res) => {
-  const note = new Note({ message: req.body.message });
+  const { message, code } = req.body;
+  const note = new Note({ message, code });
   await note.save();
   res.status(201).json({ status: 'success', data: { note } });
 });
