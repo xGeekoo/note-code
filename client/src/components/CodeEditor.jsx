@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
+import toast from 'react-hot-toast';
 import DropdownMenu from './DropdownMenu';
 import ShareButton from './ShareButton';
 import { getNote } from '../services/apiNote';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const DEFAULT_VALUE = `
 <html>
@@ -28,6 +29,7 @@ const DEFAULT_VALUE = `
 
 function CodeEditor() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const isLoading = useRef(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const [theme, setTheme] = useState('vs-dark');
@@ -48,17 +50,29 @@ function CodeEditor() {
     theme === 'vs-dark' ? 'bg-clr-editor-black' : 'bg-clr-editor-white';
 
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     async function main() {
-      if (!id) return;
-      isLoading.current = true;
-      const { note } = await getNote(id);
-      isLoading.current = false;
-      setShowSpinner(false);
-      setLanguage(note.code);
-      editorRef.current.setValue(note.message);
+      try {
+        if (!id) return;
+        isLoading.current = true;
+        const { note } = await getNote(id, signal);
+        setLanguage(note.code);
+        editorRef.current.setValue(note.message);
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        toast.error(err.message);
+        navigate('/', { replace: true });
+      } finally {
+        isLoading.current = false;
+        setShowSpinner(false);
+      }
     }
 
     main();
+
+    return () => controller.abort();
   }, [id]);
 
   return (
