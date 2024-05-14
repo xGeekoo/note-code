@@ -30,16 +30,22 @@ const DEFAULT_VALUE = `
 function CodeEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const isLoading = useRef(false);
+  const editorRef = useRef(null);
+  const note = useRef(null);
+  const isError = useRef(false);
   const [showSpinner, setShowSpinner] = useState(false);
   const [theme, setTheme] = useState('vs-dark');
   const [language, setLanguage] = useState('html');
 
-  const editorRef = useRef(null);
-
   function handleEditorDidMount(editor) {
     editorRef.current = editor;
-    if (isLoading.current) setShowSpinner(true);
+    if (!id) return;
+
+    if (!note.current && !isError.current) {
+      setShowSpinner(true);
+    } else if (note.current && !isError.current) {
+      editorRef.current.setValue(note.current.message);
+    }
   }
 
   function showValue() {
@@ -56,16 +62,16 @@ function CodeEditor() {
     async function main() {
       try {
         if (!id) return;
-        isLoading.current = true;
-        const { note } = await getNote(id, signal);
-        setLanguage(note.code);
-        editorRef.current.setValue(note.message);
+        const { note: newNote } = await getNote(id, signal);
+        note.current = newNote;
+        setLanguage(newNote.code);
+        editorRef.current?.setValue(newNote.message);
       } catch (err) {
         if (err.name === 'AbortError') return;
+        isError.current = true;
         toast.error(err.message);
-        navigate('/', { replace: true });
+        // navigate('/', { replace: true });
       } finally {
-        isLoading.current = false;
         setShowSpinner(false);
       }
     }
