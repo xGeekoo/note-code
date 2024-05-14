@@ -21,6 +21,9 @@ app.use(mongoSanitize());
 // });
 
 app.use('/api/v1/notes', noteRoutes);
+app.get('*', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, 'index.html'));
+});
 
 app.all('*', (req, res) => {
   throw new AppError(
