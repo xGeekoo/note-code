@@ -79,6 +79,7 @@ function CodeEditor() {
         note.current = newNote;
         setLanguage(newNote.code);
         setTheme(newNote.theme);
+        setIsShared(true);
         if (editorRef.current) {
           manualChange.current = true;
           editorRef.current.setValue(newNote.message);

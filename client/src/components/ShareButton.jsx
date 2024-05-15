@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { createNote } from '../services/apiNote';
 
-import share from '../assets/share.svg';
+import share from '../assets/Share.svg';
 import link from '../assets/link.svg';
 
 function ShareButton({ isShared, setIsShared, showValue, language, theme }) {
@@ -36,10 +36,6 @@ function ShareButton({ isShared, setIsShared, showValue, language, theme }) {
     }
   }
 
-  useEffect(() => {
-    id && setIsShared(true);
-  }, []);
-
   return (
     <div className="flex flex-col items-center gap-y-4 md:flex-row md:gap-x-4">
       {isShared && isLink && (
@@ -52,7 +48,7 @@ function ShareButton({ isShared, setIsShared, showValue, language, theme }) {
       )}
       <button
         onClick={handleShare}
-        className={`disabled:bg-clr-gray-medium flex items-center gap-3 rounded-full bg-clr-blue px-5 py-2.5 text-xl text-clr-white disabled:cursor-not-allowed`}
+        className={`flex items-center gap-3 rounded-full bg-clr-blue px-5 py-2.5 text-xl text-clr-white disabled:cursor-not-allowed disabled:bg-clr-gray-medium`}
         disabled={isShared}
       >
         <img src={share} alt="Share" />
