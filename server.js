@@ -1,7 +1,8 @@
 const path = require('node:path');
-const dotenv = require('dotenv');
 
-dotenv.config({ path: path.join(__dirname, 'config.env') });
+if (process.env.NODE_ENV === 'devlopment') {
+  require('dotenv').dotenv.config({ path: path.join(__dirname, 'config.env') });
+}
 
 const mongoose = require('mongoose');
 const app = require('./app');
