@@ -1,13 +1,14 @@
 const path = require('node:path');
-const dotenv = require('dotenv');
 
-dotenv.config({ path: path.join(__dirname, 'config.env') });
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config({ path: path.join(__dirname, 'config.env') });
+}
 
 const mongoose = require('mongoose');
 const app = require('./app');
 
 async function main() {
-  await mongoose.connect(`${process.env.DB_HOST}/${process.env.DB_NAME}`);
+  await mongoose.connect(`${process.env.DB_HOST}`);
   console.log('Database connected');
   const PORT = Number(process.env.PORT) || 3000;
   app.listen(PORT, () =>
