@@ -1,6 +1,6 @@
 const path = require('node:path');
 
-if (process.env.NODE_ENV === 'devlopment') {
+if (process.env.NODE_ENV === 'development') {
   require('dotenv').dotenv.config({ path: path.join(__dirname, 'config.env') });
 }
 
